@@ -1,0 +1,32 @@
+<div class="codeflair-assignment">
+    <section class="user-filter">
+        <label for="input-field">Filter Users by Name</label>
+        <input type="text" [(ngModel)]="userInput" />
+        <span *ngIf="(users | filter: userInput : 'firstname').length >= 1"> Currently users list contains {{(users | filter: userInput : 'firstname').length}} items</span>
+        <!-- <transition name="fade">
+            <span class="user-filter__no-users-found"></span>
+        </transition> -->
+        <button class="filter-button" (click)="sortByAge()">Sort by Age</button>
+    </section>
+    <div class="user-list">
+        <ul [@filterAnimation]="(users | filter: userInput : 'firstname').length">
+            <li *ngFor="let user of users | filter : userInput : 'firstname'; index as i">
+                <article class="user">
+                    <button class="user__trigger" (click)="showDetails(i)">
+                        <div class="user__image">
+                            <img src="{{user.img}}" />
+                        </div>
+                        <div class="user__info">
+                            <h2>{{user.firstname + ' ' + user.lastname}}</h2>
+                            <p class="user__age">{{user.age}}</p>
+                        </div>
+                    </button>
+                    <div *ngIf="user.toggle" class="user__extra-info">
+                        <p>{{user.city}}</p>
+                    </div>
+                </article>
+            </li>
+        </ul>
+        <p *ngIf="(users | filter: userInput : 'firstname').length === 0">results are empty</p>
+    </div>
+</div>
